@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+           xsi:schemaLocation="
+             http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
+             http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+    <cm:property-placeholder 
+        persistent-id="soft.iot.dlt.auth"
+        update-strategy="reload">
+        <cm:default-properties>
+            <cm:property name="MQTTServerId" value="FoTGatway"/>
+            <cm:property name="MQTTHost" value="tcp://localhost" />
+            <cm:property name="MQTTPort" value="1883" />
+            <cm:property name="MQTTUsername" value="karaf" />
+            <cm:property name="MQTTPassword" value="karaf" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    
+    <bean
+        id="MQTTNewConnectionsListener"
+        class="dlt.auth.model.MQTTNewConnectionsListener"
+        init-method="initialize"
+        destroy-method="disconnect">
+        <argument value="${MQTTHost}"/>
+        <argument value="${MQTTPort}"/>
+        <argument value="${MQTTServerId}"/>
+        <argument value="${MQTTUsername}"/>
+        <argument value="${MQTTPassword}"/>
+    </bean>
+</blueprint>
