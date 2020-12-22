@@ -34,15 +34,6 @@ public class MQTTNewConnectionsListener implements MqttCallback {
                 .append(":")
                 .append(port)
                 .toString();
-        
-        System.out.println("MQTTNewConnectionsListener is build.");
-        System.out.println("======Broker info=======");
-        System.out.println("URL:" + url);
-        System.out.println("PORT:" + port);
-        System.out.println("id:" + id);
-        System.out.println("USERNAME:" + username);
-        System.out.println("PASSWORD:" + password);
-
     }
 
     public void initialize() throws MqttException {
@@ -57,7 +48,6 @@ public class MQTTNewConnectionsListener implements MqttCallback {
         this.client.connect(connection);
         this.client.setCallback(this);
         this.client.subscribe(ExtendedTATUWrapper.getConnectionTopic());
-        System.out.println("MQTTNewConnectionsListener has been inicialized.");
     }
 
     public void disconnect() {
@@ -68,7 +58,6 @@ public class MQTTNewConnectionsListener implements MqttCallback {
                 Logger.getLogger(MQTTNewConnectionsListener.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println("MQTTNewConnectionsListener has been disconnected.");
     }
 
     @Override

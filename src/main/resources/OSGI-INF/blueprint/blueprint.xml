@@ -9,13 +9,15 @@
         persistent-id="soft.iot.dlt.auth"
         update-strategy="reload">
         <cm:default-properties>
-            <cm:property name="MQTTServerId" value="FoTGatway"/>
+            <cm:property name="MQTTServerId" value="P_AUTH_CLIENT"/>
             <cm:property name="MQTTHost" value="tcp://localhost" />
             <cm:property name="MQTTPort" value="1883" />
             <cm:property name="MQTTUsername" value="karaf" />
             <cm:property name="MQTTPassword" value="karaf" />
         </cm:default-properties>
     </cm:property-placeholder>
+    
+    <reference id="configAdmin" interface="org.osgi.service.cm.ConfigurationAdmin" />
     
     <bean
         id="MQTTNewConnectionsListener"
@@ -27,5 +29,12 @@
         <argument value="${MQTTServerId}"/>
         <argument value="${MQTTUsername}"/>
         <argument value="${MQTTPassword}"/>
+    </bean>
+    
+    <bean 
+        id="pidEditor" 
+        class="dlt.auth.model.PIDEditor"
+        init-method="test">
+        <property name="configurationAdmin" ref="configAdmin"/>
     </bean>
 </blueprint>
