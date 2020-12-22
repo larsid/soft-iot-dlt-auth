@@ -19,6 +19,11 @@
     
     <reference id="configAdmin" interface="org.osgi.service.cm.ConfigurationAdmin" />
     
+    <service 
+        id="IPIDEditorService"
+        ref="pidEditor"
+        interface="dlt.auth.services.IPIDEditor"/>
+    
     <bean
         id="MQTTNewConnectionsListener"
         class="dlt.auth.model.MQTTNewConnectionsListener"
@@ -33,8 +38,7 @@
     
     <bean 
         id="pidEditor" 
-        class="dlt.auth.model.PIDEditor"
-        init-method="test">
+        class="dlt.auth.model.PIDEditor">
         <property name="configurationAdmin" ref="configAdmin"/>
     </bean>
 </blueprint>

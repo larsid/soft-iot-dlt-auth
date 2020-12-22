@@ -27,6 +27,12 @@
             <version>20200518</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.configadmin</artifactId>
+            <version>1.8.16</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
