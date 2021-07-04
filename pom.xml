@@ -12,9 +12,9 @@
     <description>SOFT-IoT-DLT-Auth OSGi blueprint bundle project.</description>
     <dependencies>
         <dependency>
-            <groupId>br.uefs.larsid.dlt.iot.soft</groupId>
-            <artifactId>Extended-TATU-Wrapper</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.github.UellingtonDamasceno</groupId>
+            <artifactId>extended-tatu-wrapper</artifactId>
+            <version>main-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.paho</groupId>
@@ -49,7 +49,7 @@
                         <Embed-Dependency>
                             org.eclipse.paho.client.mqttv3,
                             json,
-                            Extended-TATU-Wrapper;
+                            extended-tatu-wrapper;
                             scope=compile|runtime;
                             inline=false
                         </Embed-Dependency>
@@ -77,28 +77,8 @@
     
     <repositories>
         <repository>
-            <id>soft-iot-dlt-client-tangle-mvn-repo</id>
-            <url>https://raw.github.com/larsid/soft-iot-dlt-client-tangle/mvn-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>soft-iot-dlt-load-monitor-mvn-repo</id>
-            <url>https://raw.github.com/larsid/soft-iot-dlt-load-monitor/mvn-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>extended-tatu-wrapper-mvn-repo</id>
-            <url>https://raw.github.com/UellingtonDamasceno/extended-tatu-wrapper/mvn-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
