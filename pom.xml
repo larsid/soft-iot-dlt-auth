@@ -12,9 +12,9 @@
     <description>SOFT-IoT-DLT-Auth OSGi blueprint bundle project.</description>
     <dependencies>
         <dependency>
-            <groupId>com.github.UellingtonDamasceno</groupId>
-            <artifactId>extended-tatu-wrapper</artifactId>
-            <version>main-SNAPSHOT</version>
+            <groupId>com.github.larsid</groupId>
+            <artifactId>soft-iot-mapping-devices</artifactId>
+            <version>master-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.paho</groupId>

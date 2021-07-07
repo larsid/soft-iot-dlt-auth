@@ -14,38 +14,11 @@
             <cm:property name="MQTTPort" value="1883" />
             <cm:property name="MQTTUsername" value="karaf" />
             <cm:property name="MQTTPassword" value="karaf" />
-            <cm:property name="MappingDevicePID" value="br.ufba.dcc.wiser.soft_iot.gateway.mapping_devices"/>
-            <cm:property name="PropertyKey" value="DevicesConnected"/>
         </cm:default-properties>
     </cm:property-placeholder>
-    
-    <reference id="configAdmin" interface="org.osgi.service.cm.ConfigurationAdmin" />
-    
-    <service 
-        id="IPIDEditorService"
-        ref="pidEditor"
-        interface="dlt.auth.services.IPIDEditor"/>
-    
-    <service
-        id="IDevicePropertiesManagerService"
-        ref="devicePropertiesManager"
-        interface="dlt.auth.services.IDevicePropertiesManager"
-    />
-    
-    <bean 
-        id="pidEditor" 
-        class="dlt.auth.model.PIDEditor">
-        <property name="configurationAdmin" ref="configAdmin"/>
-    </bean>
-    
-    <bean
-        id="devicePropertiesManager"
-        class="dlt.auth.model.DevicePropertiesManager">
-        <argument value="${MappingDevicePID}"/>
-        <argument value="${PropertyKey}"/>
-        <property name="pidEditor" ref="pidEditor"/>
-    </bean>
-    
+
+    <reference id="devicePropertiesManager" interface="br.uefs.larsid.extended.mapping.devices.services.IDevicePropertiesManager" />
+
     <bean
         id="MQTTNewConnectionsListener"
         class="dlt.auth.model.MQTTNewConnectionsListener"

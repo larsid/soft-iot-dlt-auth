@@ -1,11 +1,11 @@
 package dlt.auth.model;
 
-import dlt.auth.services.IDevicePropertiesManager;
-import extended.tatu.wrapper.enums.ExtendedTATUMethods;
-import extended.tatu.wrapper.model.Device;
-import extended.tatu.wrapper.model.TATUMessage;
-import extended.tatu.wrapper.util.DeviceWrapper;
-import extended.tatu.wrapper.util.ExtendedTATUWrapper;
+import br.uefs.larsid.extended.mapping.devices.enums.ExtendedTATUMethods;
+import br.uefs.larsid.extended.mapping.devices.model.TATUMessage;
+import br.uefs.larsid.extended.mapping.devices.services.IDevicePropertiesManager;
+import br.uefs.larsid.extended.mapping.devices.tatu.DeviceWrapper;
+import br.uefs.larsid.extended.mapping.devices.tatu.ExtendedTATUWrapper;
+import br.ufba.dcc.wiser.soft_iot.entities.Device;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,14 +22,14 @@ import org.json.JSONObject;
  * @author Uellington Damasceno
  */
 public class MQTTNewConnectionsListener implements MqttCallback {
-    
+
     private final String uri;
     private final String serverId;
     private final String username;
     private final String password;
     private MqttClient client;
     private IDevicePropertiesManager deviceManager;
-    
+
     public MQTTNewConnectionsListener(String url, String port, String id, String username, String password) {
         this.serverId = id;
         this.username = username;
@@ -40,11 +40,11 @@ public class MQTTNewConnectionsListener implements MqttCallback {
                 .append(port)
                 .toString();
     }
-    
+
     public void setDeviceManager(IDevicePropertiesManager deviceManager) {
         this.deviceManager = deviceManager;
     }
-    
+
     public void initialize() throws MqttException {
         this.client = new MqttClient(this.uri, serverId);
         MqttConnectOptions connection = new MqttConnectOptions();
@@ -58,7 +58,7 @@ public class MQTTNewConnectionsListener implements MqttCallback {
         this.client.setCallback(this);
         this.client.subscribe(ExtendedTATUWrapper.getConnectionTopic());
     }
-    
+
     public void disconnect() {
         if (this.client != null && client.isConnected()) {
             try {
@@ -68,21 +68,21 @@ public class MQTTNewConnectionsListener implements MqttCallback {
             }
         }
     }
-    
+
     @Override
     public void connectionLost(Throwable cause) {
         Logger.getLogger(MQTTNewConnectionsListener.class.getName()).log(Level.SEVERE, null, cause);
     }
-    
+
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         TATUMessage tatuMessage = new TATUMessage(message.getPayload());
         if (tatuMessage.getMethod().equals(ExtendedTATUMethods.CONNECT)) {
             Map sDevice = new JSONObject(tatuMessage.getMessageContent())
                     .getJSONObject("DEVICE").toMap();
-            
+
             Device device = DeviceWrapper.toDevice(sDevice);
-            
+
             String connackMessage = ExtendedTATUWrapper
                     .buildConnackMessage(device.getId(), device.getId(), true);
             this.deviceManager.addDevice(device);
@@ -90,9 +90,9 @@ public class MQTTNewConnectionsListener implements MqttCallback {
             this.client.publish(ExtendedTATUWrapper.getConnectionTopicResponse(), response);
         }
     }
-    
+
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
     }
-    
+
 }
