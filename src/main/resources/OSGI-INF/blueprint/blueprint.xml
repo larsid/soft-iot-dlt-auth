@@ -18,10 +18,14 @@
     </cm:property-placeholder>
 
     <reference id="devicePropertiesManager" interface="br.uefs.larsid.extended.mapping.devices.services.IDevicePropertiesManager" />
-
+    
+    <service id="IPublisherService" 
+             ref="clientMqttManager"
+             interface="dlt.auth.services.IPublisher"/>
+    
     <bean
-        id="MQTTNewConnectionsListener"
-        class="dlt.auth.model.MQTTNewConnectionsListener"
+        id="clientMqttManager"
+        class="dlt.auth.model.ClientMqttManager"
         init-method="initialize"
         destroy-method="disconnect">
         <argument value="${MQTTHost}"/>
@@ -29,6 +33,14 @@
         <argument value="${MQTTServerId}"/>
         <argument value="${MQTTUsername}"/>
         <argument value="${MQTTPassword}"/>
+    </bean>
+    
+    <bean
+        id="MQTTNewConnectionsListener"
+        class="dlt.auth.model.MQTTNewConnectionsListener"
+        init-method="initialize"
+        destroy-method="disconnect">
+        <property name="clientMqtt" ref="clientMqttManager"/>
         <property name="deviceManager" ref="devicePropertiesManager"/>
     </bean>
 </blueprint>

@@ -24,14 +24,8 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20200518</version>
+            <version>20210307</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.configadmin</artifactId>
-            <version>1.8.16</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -48,8 +42,7 @@
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Embed-Dependency>
                             org.eclipse.paho.client.mqttv3,
-                            json,
-                            extended-tatu-wrapper;
+                            json;
                             scope=compile|runtime;
                             inline=false
                         </Embed-Dependency>
