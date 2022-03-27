@@ -12,9 +12,9 @@
     <description>SOFT-IoT-DLT-Auth OSGi blueprint bundle project.</description>
     <dependencies>
         <dependency>
-            <groupId>com.github.larsid</groupId>
+            <groupId>br.ufba.dcc.wiser.soft_iot</groupId>
             <artifactId>soft-iot-mapping-devices</artifactId>
-            <version>master-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.paho</groupId>
@@ -68,11 +68,11 @@
         </plugins>
     </build>
     
-    <repositories>
+    <!--    <repositories>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-    </repositories>
+    </repositories>-->
 
 </project>
