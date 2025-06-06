@@ -16,6 +16,7 @@ import br.uefs.larsid.extended.mapping.devices.services.IDevicePropertiesManager
 import br.uefs.larsid.extended.mapping.devices.tatu.DeviceWrapper;
 import br.uefs.larsid.extended.mapping.devices.tatu.ExtendedTATUWrapper;
 import br.ufba.dcc.wiser.soft_iot.entities.Device;
+import java.util.Optional;
 
 /**
  *
@@ -62,16 +63,25 @@ public class MQTTNewConnectionsListener implements MqttCallback {
             logger.log(Level.WARNING, "SOFT-IOT-DLT-AUTH - Received message with unsupported method: {0}", tatuMessage.getMethod());
             return;
         }
+
         Map sDevice = new JSONObject(tatuMessage.getMessageContent())
                 .getJSONObject("DEVICE").toMap();
 
         Device device = DeviceWrapper.toDevice(sDevice);
+
+        Optional<Device> optDevice = this.deviceManager.getDevice(device.getId());
+
         logger.log(Level.INFO, "SOFT-IOT-DLT-AUTH - recive connect message from {0}", device.getId());
+
+        String targetTopic = ExtendedTATUWrapper.getConnectionTopicResponse();
 
         String connackMessage = ExtendedTATUWrapper
                 .buildConnackMessage(device.getId(), device.getId(), true);
-        this.deviceManager.addDevice(device);
-        String targetTopic = ExtendedTATUWrapper.getConnectionTopicResponse();
+
+        if (optDevice.isEmpty()) {
+            this.deviceManager.addDevice(device);
+        }
+
         logger.log(Level.INFO, "SOFT-IOT-DLT-AUTH - SEND: {0} to {1}", new String[]{connackMessage, targetTopic});
         this.clientMqtt.publish(targetTopic, connackMessage);
     }
